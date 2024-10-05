@@ -185,6 +185,7 @@ const checkCompletedRows = () => {
             }
             // maxScore();
             lifesScore()
+    
         }
     }
 };
@@ -212,20 +213,12 @@ const checkCompletedColumns = () => {
             }
             // maxScore();
             lifesScore()
+  
         }
     }
 };
 
 createGrid();
-
-const lifesScore = () => {
-   if(score >=30){
-        alert('GRATTIS DU HAR VUNNIT ')
-        location.reload();
-    } else{
-        maxLifes();
-    }
-};
 
 const maxLifes = () => {
     let oneLifeGone = true;
@@ -241,25 +234,43 @@ const maxLifes = () => {
         location.reload();
     }
 }
+const lifesScore = () => {
+   if(score >= 5 ){
+        alert('GRATTIS DU HAR VUNNIT ')
+   
+        location.reload();
+    } else{
+        maxLifes();
+    }
+};
+
 
 const blockScore = (blockShapeKey) => {
-    if (blockShapeKey === 'Z') {
-        score +=4
-        console.log('4 Poäng för Z');
     
-    } else if(blockShapeKey === 'T'){
-        score +=4
-        console.log('4 Poäng för T');
+    if (blockShapeKey === 'Z' || 
+        blockShapeKey === 'T' || 
+        blockShapeKey === 'O') {
+        score +=4;
+    
+    } else if(blockShapeKey === 'L' || 
+        blockShapeKey === 'M'){
+            score +=3
+
+    } else if(blockShapeKey === 'N' || 
+        blockShapeKey === 'I'){
+            score +=2
 
     } else if(blockShapeKey === 'U'){
-        score +=1
-        console.log('1 Poäng för U');
+            score +=1
 
-    } else {
-        console.log('Mierda');
     }
 
     scoreSpan.innerHTML = score;
+
+    if(score >=5 ){
+
+        lifesScore(); 
+    }
 };
 
 
