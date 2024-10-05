@@ -41,9 +41,9 @@ body {
 
 .wrapper #game-container {
   width: 90vw;
-  max-width: 395px;
+  max-width: 315px;
   height: 90vw;
-  max-height: 395px;
+  max-height: 315px;
 
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -86,10 +86,10 @@ body {
 
 .block-container .block {
   width: 7.5vw;
-  max-width: 32px;
+  max-width: 28px;
 
   height: 7.5vw;
-  max-height: 32px;
+  max-height: 28px;
   cursor: grab;
   border: 1px double white;
   border-radius: 20%;
