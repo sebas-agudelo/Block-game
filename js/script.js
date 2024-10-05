@@ -203,7 +203,7 @@ const checkCompletedColumns = () => {
         }
 
         if (isColComplete) {
-            score += 15; 
+            score += 10; 
             scoreSpan.innerText = score;
 
             for (let row = 0; row < gridSize; row++) {
@@ -211,7 +211,7 @@ const checkCompletedColumns = () => {
                 slot.classList.remove('block');
                 slot.classList.add('block-slot');
             }
-            // maxScore();
+
             lifesScore()
   
         }
@@ -235,7 +235,7 @@ const maxLifes = () => {
     }
 }
 const lifesScore = () => {
-   if(score >= 5 ){
+   if(score >= 45 ){
         alert('GRATTIS DU HAR VUNNIT ')
    
         location.reload();
@@ -243,7 +243,6 @@ const lifesScore = () => {
         maxLifes();
     }
 };
-
 
 const blockScore = (blockShapeKey) => {
     
@@ -267,7 +266,7 @@ const blockScore = (blockShapeKey) => {
 
     scoreSpan.innerHTML = score;
 
-    if(score >=5 ){
+    if(score >= 45 ){
 
         lifesScore(); 
     }
