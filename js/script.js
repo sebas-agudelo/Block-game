@@ -235,6 +235,7 @@ const maxLifes = () => {
     }
 }
 const lifesScore = () => {
+
    if(score >= 45 ){
         alert('GRATTIS DU HAR VUNNIT ')
    
@@ -267,8 +268,8 @@ const blockScore = (blockShapeKey) => {
     scoreSpan.innerHTML = score;
 
     if(score >= 45 ){
-
         lifesScore(); 
+        
     }
 };
 
