@@ -17,7 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(180deg, #be74ff, #8800ff, #230042);
+  background: linear-gradient(180deg, #e1ffe1, #c457ff, #230042);
   /* padding: 50px 0; */
   margin: 0 auto;
 }
@@ -74,9 +74,15 @@ body {
   width: 90vw;
   max-width: 350px;
 
+  height: 100px;
+  overflow: hidden;
+
   display: flex;
   justify-content: space-around;
+  align-items: center;
+
   gap: 15px;
+  position: relative;
 }
 
 #block-pool .block-container {
@@ -144,6 +150,12 @@ body {
 #play-btn::before {
   font-size: 3.2rem;
   color: orange;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+
+  transform: translate(-50%, -70%);
+  z-index: 1;
 }
 
 #restart-btn::before {
