@@ -17,7 +17,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(180deg, #e1ffe1, #c457ff, #230042);
+  background: linear-gradient(180deg, #ffdde1, #f7b2b8, #b15c6d);
+
+
   /* padding: 50px 0; */
   margin: 0 auto;
 }
@@ -156,7 +158,19 @@ body {
 
   transform: translate(-50%, -75%);
   z-index: 1;
+  animation: float 1.5s infinite; 
+}
 
+@keyframes float {
+  0% {
+    transform: translate(-50%, -75%) translateY(0);
+}
+50% {
+    transform: translate(-50%, -75%) translateY(-10px); 
+}
+100% {
+    transform: translate(-50%, -75%) translateY(0); 
+}
 }
 
 #restart-btn::before {
