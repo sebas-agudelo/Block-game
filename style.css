@@ -148,13 +148,13 @@ body {
 }
 
 #play-btn::before {
-  font-size: 10rem;
+  font-size: 7.5rem;
   color: orange;
   position: absolute;
-  top: 78%;
+  top: 75%;
   left: 50%;
 
-  transform: translate(-50%, -78%);
+  transform: translate(-50%, -75%);
   z-index: 1;
 
 }
