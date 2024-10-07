@@ -491,19 +491,16 @@ const checkCompletedRows = () => {
             score += 10; 
             scoreSpan.innerText = score;
 
-         
-
-        
+            const allShapeColors = Object.values(shapeColors);
+            allShapeColors.forEach((shapeColor) => {
                 for (let col = 0; col < gridSize; col++) {
                     const slot = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
                     slot.classList.remove('block');
+                    slot.classList.remove(shapeColor)
                     slot.classList.add('block-slot');
                 }
-
-            
-   
+            });
             lifesScore()
-    
         }
     }
 };
