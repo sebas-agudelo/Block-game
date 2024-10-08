@@ -55,14 +55,16 @@ body {
   margin: 5px 0 50px;
   border: 5px solid orange;
   border-radius: 10px;
-  background-color: #000000;
+  /* background-color: #000000; */
+  background: transparent;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 
 #game-container .block-slot {
   border: 1px solid #3a3a3a;
-  background-color: #1c1c1c;
+  /* background-color: #1c1c1c; */
+  background: transparent;
 }
 
 #game-container .block {
@@ -84,7 +86,6 @@ body {
   align-items: center;
 
   gap: 15px;
-  /* position: relative; */
 }
 
 #block-pool .block-container {
@@ -177,6 +178,14 @@ body {
   font-size: 2.2rem;
   color: orange;
 }
+
+
+/* .wrapper .line{
+  border: 3px solid black;
+  width: 90vw;
+
+  height: 90vw;
+} */
 
 /* @media screen and (min-width: 768px) and (max-width: 1024px) {
   .wrapper #game-container{

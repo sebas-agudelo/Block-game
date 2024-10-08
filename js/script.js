@@ -540,8 +540,6 @@ const checkCompletedColumns = () => {
     }
 };
 
-createGrid();
-
 const maxLifes = () => {
     let oneLifeGone = true;
 
@@ -596,18 +594,21 @@ const blockScore = (blockShapeKey) => {
 };
 
 
-playBtn.addEventListener('click', () => {
-    playBtn.style.display = 'none'
-    restartBtn.style.display = 'block'
-    createBlockPool();
-});
+// playBtn.addEventListener('click', () => {
+//     playBtn.style.display = 'none'
+//     restartBtn.style.display = 'block'
+//     createBlockPool();
+// });
 
-restartBtn.addEventListener('click', () => {
-    location.reload();
-    playBtn.style.display = 'block'
-    pauseBtn.style.display = 'none';
-})
+// restartBtn.addEventListener('click', () => {
+//     location.reload();
+//     playBtn.style.display = 'block'
+//     pauseBtn.style.display = 'none';
+// })
 
+
+createGrid();
+createBlockPool();
 
 
 
