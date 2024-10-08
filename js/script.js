@@ -183,21 +183,99 @@ let touchOffsetY = 0;
 
 /* Skapar touch funktionalitet */
 const handleTouchStart = (event) => {
-    console.log('Hello from handle touch start');
-   
-}
+    event.preventDefault();
+    const touch = event.touches[0];
+    const blockContainer = event.target.closest('.block-container');
+    
+    if (!blockContainer) return; // Om vi inte startar på en block-container, returnera.
+
+    activeBlock = blockContainer;
+    
+    const blockRect = blockContainer.getBoundingClientRect();
+    touchOffsetX = touch.clientX - blockRect.left;
+    touchOffsetY = touch.clientY - blockRect.top;
+
+    // Förbered blocket för rörelse genom att göra det absolut positionerat
+    blockContainer.style.position = 'absolute';
+    blockContainer.style.zIndex = '1000'; // Se till att blocket är över andra element
+};
 
 const handleTouchMove = (event) => {
-    console.log('Hello from handle touch move');
+    if (!activeBlock) return; // Om inget block är valt, returnera.
 
-   
-}
+    const touch = event.touches[0];
+    const gameRect = gameContainer.getBoundingClientRect();
+
+    // Flytta blocket baserat på fingerposition
+    activeBlock.style.left = `${touch.clientX - touchOffsetX}px`;
+    activeBlock.style.top = `${touch.clientY - touchOffsetY}px`;
+    
+    // Se till att blocket hålls inom spelområdet
+    if (touch.clientX - touchOffsetX < gameRect.left) {
+        activeBlock.style.left = `${gameRect.left}px`;
+    }
+    if (touch.clientY - touchOffsetY < gameRect.top) {
+        activeBlock.style.top = `${gameRect.top}px`;
+    }
+};
 
 const handleTouchEnd = (event) => {
-    console.log('Hello from handle touch end');
+    if (!activeBlock) return; // Om inget block är valt, returnera.
+
+    const touch = event.changedTouches[0]; // Få slutpositionen av fingret
+    const gameRect = gameContainer.getBoundingClientRect(); // Hämta gränserna för grid-container
+    
+    // Beräkna den exakta positionen där användaren släppte blocket
+    const dropX = touch.clientX - gameRect.left;
+    const dropY = touch.clientY - gameRect.top;
+
+    // Beräkna vilken rad och kolumn denna position motsvarar
+    const targetCol = Math.floor(dropX / blockSize);
+    const targetRow = Math.floor(dropY / blockSize);
+
+    // Kontrollera att vi är inom gränserna för grid
+    if (targetRow >= 0 && targetRow < gridSize && targetCol >= 0 && targetCol < gridSize) {
+        const nearestSlot = document.querySelector(`[data-row="${targetRow}"][data-col="${targetCol}"]`);
+        
+        if (nearestSlot && nearestSlot.classList.contains('block-slot')) {
+            // Beräkna offset för blocket
+            const blockShapeKey = activeBlock.dataset.shape;
+            const blockColor = activeBlock.firstChild.classList[1];
+            const offsetX = Math.floor(touchOffsetX / blockSize);
+            const offsetY = Math.floor(touchOffsetY / blockSize);
+            const shape = shapes[blockShapeKey];
+
+            // Beräkna startpositionen för blocket i griden
+            const startRow = targetRow - offsetY;
+            const startCol = targetCol - offsetX;
+
+            let blockPlaced = false;
+
+            if (canPlaceShape(startRow, startCol, shape)) {
+                placeShape(startRow, startCol, shape, blockColor);
+                activeBlock.remove(); // Ta bort blocket från blockpoolen
+                blockPlaced = true;
+                createBlockPool(); // Generera nya block i poolen
+            }
+
+            if (!blockPlaced) {
+                alert('Placera blocket inom gridrutor');
+            } else {
+                lifesScore();
+                blockScore(blockShapeKey);
+            }
+        }
+    } else {
+        alert("Blocket släpptes utanför grid.");
+    }
+
+    // Återställ blockets position och z-index
+    activeBlock.style.position = 'static';
+    activeBlock.style.zIndex = '1';
+    activeBlock = null; // Nollställ aktivt block efter att touch avslutats
+};
 
 
-}
 
 
 /* Skapar funktionalitet för poäng när man får en hel rad */
