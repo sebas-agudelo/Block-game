@@ -23,6 +23,7 @@ body {
   /* padding: 50px 0; */
   margin: 0 auto;
 
+  /*Tar bort den inbbygda touch funktionen som kommer med i Safari och edge*/
   user-select: none; /* Standard property */ 
   -webkit-user-select: none; /* Safari and Chrome */ 
   -ms-user-select: none; /* IE and Edge */
