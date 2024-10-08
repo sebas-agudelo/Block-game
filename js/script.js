@@ -1,4 +1,3 @@
-
 // const gameContainer = document.getElementById('game-container');
 // const blockPool = document.getElementById('block-pool');
 // const scoreSpan = document.getElementById('score');
@@ -370,8 +369,13 @@ const generateBlock = (id) => {
     blockContainer.dataset.id = id;
     blockContainer.dataset.shape = shapeKey;
     blockContainer.draggable = true;
+
     blockContainer.addEventListener('dragstart', handleDragStart);
     blockContainer.addEventListener('dragend', handleDragEnd); 
+
+    blockContainer.addEventListener('touchstart', handleTouchStart);
+    blockContainer.addEventListener('touchmove', handleTouchMove);
+    blockContainer.addEventListener('touchend', handleTouchEnd);
 
     shape.forEach(([row, col]) => {
         const block = document.createElement('div');
@@ -381,6 +385,7 @@ const generateBlock = (id) => {
         blockContainer.appendChild(block);
     });
 
+ 
     return blockContainer;
 };
 
@@ -389,9 +394,10 @@ const getRandomShapeKey = () => {
     return shapeKeys[Math.floor(Math.random() * shapeKeys.length)];
 };
 
+/* Skapar drag funktionalitet för webbläsaren */
 const handleDragStart = (event) => {
     const blockContainer = event.target.closest('.block-container');
-    blockContainer.style.opacity = '0.5';
+    blockContainer.style.opacity = '0.01';
 
     const blockId = blockContainer.dataset.id;
     const blockShape = blockContainer.dataset.shape;
@@ -475,6 +481,30 @@ const placeShape = (row, col, shape, color) => {
     checkCompletedColumns();
 };
 
+let activeBlock = null;
+let touchOffsetX = 0;
+let touchOffsetY = 0;
+
+/* Skapar touch funktionalitet */
+const handleTouchStart = (event) => {
+    console.log('Hello from handle touch start');
+   
+}
+
+const handleTouchMove = (event) => {
+    console.log('Hello from handle touch move');
+
+   
+}
+
+const handleTouchEnd = (event) => {
+    console.log('Hello from handle touch end');
+
+
+}
+
+
+/* Skapar funktionalitet för poäng när man får en hel rad */
 const checkCompletedRows = () => {
     for (let row = 0; row < gridSize; row++) {
         let isRowComplete = true;
@@ -505,6 +535,7 @@ const checkCompletedRows = () => {
     }
 };
 
+/* Skapar funktionalitet för poäng när man får en hel kolum */
 const checkCompletedColumns = () => {
     for (let col = 0; col < gridSize; col++) {
         let isColComplete = true;
@@ -592,6 +623,7 @@ const blockScore = (blockShapeKey) => {
 
     }
 };
+
 
 createGrid();
 createBlockPool();
