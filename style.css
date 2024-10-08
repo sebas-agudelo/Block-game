@@ -22,6 +22,10 @@ body {
 
   /* padding: 50px 0; */
   margin: 0 auto;
+
+  user-select: none; /* Standard property */ 
+  -webkit-user-select: none; /* Safari and Chrome */ 
+  -ms-user-select: none; /* IE and Edge */
 }
 
 .wrapper .scores-and-lives-wrapper {
@@ -130,66 +134,4 @@ body {
 }
 
 
-#restart-btn {
-  display: none;
-}
 
-.game-btns {
-  width: 90vw;
-  max-width: 350px;
-
-  height: 55px;
-  text-align: center;
-}
-
-.game-btns #play-btn,
-.game-btns #restart-btn {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-#play-btn::before {
-  font-size: 7.5rem;
-  color: orange;
-  position: absolute;
-  top: 75%;
-  left: 50%;
-
-  transform: translate(-50%, -75%);
-  z-index: 1;
-  animation: float 1.5s infinite; 
-}
-
-@keyframes float {
-  0% {
-    transform: translate(-50%, -75%) translateY(0);
-}
-50% {
-    transform: translate(-50%, -75%) translateY(-10px); 
-}
-100% {
-    transform: translate(-50%, -75%) translateY(0); 
-}
-}
-
-#restart-btn::before {
-  font-size: 2.2rem;
-  color: orange;
-}
-
-
-/* .wrapper .line{
-  border: 3px solid black;
-  width: 90vw;
-
-  height: 90vw;
-} */
-
-/* @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .wrapper #game-container{
-    max-width: 70vw;
-    max-height: 70vw;
-  }
-} */
