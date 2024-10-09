@@ -18,9 +18,6 @@ body {
   flex-direction: column;
   align-items: center;
   background: linear-gradient(180deg, #ffdde1, #f7b2b8, #b15c6d);
-
-
-  /* padding: 50px 0; */
   margin: 0 auto;
 
   /*Tar bort den inbbygda touch funktionen som kommer med i Safari och edge*/
@@ -35,7 +32,8 @@ body {
   display: flex;
   justify-content: space-between;
   width: 90vw;
-  max-width: 350px;
+  max-width: 315px;
+  margin: 20px 0 45px;
   
 }
 
@@ -57,10 +55,9 @@ body {
   grid-template-rows: repeat(10, 1fr);
   gap: 2px;
 
-  margin: 5px 0 50px;
+  margin: 0 0 90px;
   border: 5px solid orange;
   border-radius: 10px;
-  /* background-color: #000000; */
   background: transparent;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
@@ -68,14 +65,12 @@ body {
 
 #game-container .block-slot {
   border: 1px solid #3a3a3a;
-  /* background-color: #1c1c1c; */
   background: transparent;
 }
 
 #game-container .block {
   width: 100%;
   height: 100%;
-  /* border: 1px double white; */
   border-radius: 20%;
 }
 
@@ -83,28 +78,22 @@ body {
   width: 90vw;
   height: 100px;
   max-width: 315px;
-  /* overflow: hidden; */
 
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Fördela dina containers jämnt */
-  gap: 10px; /* Litet mellanrum mellan block-containers om det behövs */
-  justify-items: center; /* Centrerar blocken i sina respektive containers */
-  
-
-
-
-  
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 10px; 
+  justify-items: center;   
 }
 
 #block-pool .block-container {
   display: grid;
-gap: 2px;
-  grid-template-columns: repeat(auto-fit, minmax(28px, 1fr)); /* Skapar kolumner baserat på blockens storlek */
-  grid-template-rows: repeat(auto-fit, minmax(28px, 1fr));    /* Skapar rader dynamiskt */
-  width: auto;  /* Anpassar bredden beroende på innehållet */
-  height: 56px; /* Anpassar höjden beroende på innehållet */
+  gap: 2px;
+  grid-template-columns: repeat(auto-fit, minmax(28px, 1fr)); 
+  grid-template-rows: repeat(auto-fit, minmax(28px, 1fr));   
+  width: auto;  
+  height: 56px; 
   
-  justify-content: center; /* Centrerar blocken i container */
+  justify-content: center; 
   align-content: center;
 
 }
@@ -117,8 +106,8 @@ gap: 2px;
   max-height: 27px;
   cursor: grab;
   border-radius: 20%;
-  margin: 0; /* Se till att det inte finns några marginaler */
-  padding: 0; /* Tar bort eventuell inre fyllning */
+  margin: 0;
+  padding: 0; 
 }
 
 
@@ -147,11 +136,9 @@ gap: 2px;
   background-color: #000000;
 }
 
-
-
 .block-container-placeholder {
   width: 84px;
   max-width: 84px;
   height: 100%; 
-  visibility: hidden; /* Keep it invisible but occupying space */
+  visibility: hidden; 
 }
