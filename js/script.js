@@ -1,10 +1,14 @@
 const gameContainer = document.getElementById('game-container');
+const progressBar = document.getElementById('progress-done');
 const blockPool = document.getElementById('block-pool');
 const scoreSpan = document.getElementById('score');
 const livesWrapper = document.getElementById('lives');
 
 const restartBtn = document.getElementById('restart-btn');
 const playBtn = document.getElementById('play-btn');
+
+
+
 const gridSize = 10;
 const blockSize = 32; 
 let score = 0;
@@ -144,7 +148,7 @@ const handleDrop = (event) => {
         
     } else{
         lifesScore();
-        blockScore(blockShapeKey);
+        // blockScore(blockShapeKey);
     }
 };
 
@@ -319,6 +323,7 @@ const checkCompletedColumns = () => {
         if (isColComplete) {
             score += 10; 
             scoreSpan.innerText = score;
+            progressBar.style.width = `${Math.min((score / 40) * 100, 100)}%`
 
 
             const allShapeColors = Object.values(shapeColors);
@@ -359,9 +364,7 @@ const lifesScore = () => {
         alert('GRATTIS DU HAR VUNNITTTTTT ')
    
         location.reload();
-    } else{
-        maxLifes();
-    }
+    } 
 };
 
 const blockScore = (blockShapeKey) => {
