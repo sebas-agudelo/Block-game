@@ -75,7 +75,7 @@ body {
 #game-container .block {
   width: 100%;
   height: 100%;
-  border: 1px double white;
+  /* border: 1px double white; */
   border-radius: 20%;
 }
 
@@ -98,7 +98,7 @@ body {
 
 #block-pool .block-container {
   display: grid;
-  /* gap: 2px; Ingen mellanrum mellan blocken */
+gap: 2px;
   grid-template-columns: repeat(auto-fit, minmax(28px, 1fr)); /* Skapar kolumner baserat på blockens storlek */
   grid-template-rows: repeat(auto-fit, minmax(28px, 1fr));    /* Skapar rader dynamiskt */
   width: auto;  /* Anpassar bredden beroende på innehållet */
@@ -111,12 +111,11 @@ body {
 
 .block-container .block {
   width: 7.5vw;
-  max-width: 28px;
+  max-width: 27px;
 
   height: 7.5vw;
-  max-height: 28px;
+  max-height: 27px;
   cursor: grab;
-  border: 1px double white;
   border-radius: 20%;
   margin: 0; /* Se till att det inte finns några marginaler */
   padding: 0; /* Tar bort eventuell inre fyllning */
