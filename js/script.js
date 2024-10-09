@@ -262,10 +262,11 @@ const handleTouchEnd = (event) => {
                 activeBlock.remove();
                 createBlockPool();
             }
-
             
     if(!blockPlaced){
-        alert('Placera blocken inuti ruterna')
+        activeBlock.style.position = 'static';
+        activeBlock.style.zIndex = '1';
+        activeBlock = null;
         
     } else{
         pointsFuction();
