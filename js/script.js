@@ -24,14 +24,14 @@ const shapeColors = {
 };
 
 const shapes = {
-    Z: [[0, 0], [0, 1], [1, 1], [1, 2]], 
-    T: [[0, 1], [1, 0], [1, 1], [1, 2]], 
+    // Z: [[0, 0], [0, 1], [1, 1], [1, 2]], 
+    // T: [[0, 1], [1, 0], [1, 1], [1, 2]], 
     O: [[0, 0], [0, 1], [1, 0], [1, 1]], 
-    U: [[0, 0]],
-    L: [[0, 0], [1, 0], [1, 1]], 
-    I: [[0, 0], [1, 0]], 
-    M: [[0, 0], [0, 1], [0, 2]],
-    N: [[0, 0], [0, 1]]
+    // U: [[0, 0]],
+    // L: [[0, 0], [1, 0], [1, 1]], 
+    // I: [[0, 0], [1, 0]], 
+    // M: [[0, 0], [0, 1], [0, 2]],
+    // N: [[0, 0], [0, 1]]
 };
 
 const createGrid = () => {
@@ -176,6 +176,7 @@ const placeShape = (row, col, shape, color) => {
 
     checkCompletedRows();
     checkCompletedColumns();
+    
 };
 
 let activeBlock = null;
@@ -249,18 +250,31 @@ const handleTouchEnd = (event) => {
             const offsetX = Math.floor(touchOffsetX / blockSize);
             const offsetY = Math.floor(touchOffsetY / blockSize);
             const shape = shapes[blockShapeKey];
-
+            
             const startRow = targetRow - offsetY;
             const startCol = targetCol - offsetX;
 
+            let blockPlaced = false;
+
             if (canPlaceShape(startRow, startCol, shape)) {
                 placeShape(startRow, startCol, shape, blockColor);
+                blockPlaced = true
                 activeBlock.remove();
                 createBlockPool();
             }
-        }
-    } 
 
+            
+    if(!blockPlaced){
+        alert('Placera blocken inuti ruterna')
+        
+    } else{
+        pointsFuction();
+        blockScore(blockShapeKey);
+    }
+
+        }
+        
+    } 
     // Remove placeholder
     const placeholder = document.querySelector('.block-container-placeholder');
     if (placeholder) {
