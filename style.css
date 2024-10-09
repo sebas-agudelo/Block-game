@@ -159,6 +159,11 @@ body {
   border-radius: 20px;
   color: white;
   height: 100%;
-  width: 0;
+  width: 0%;
   transition: 1s ease 0.3s;
+}
+
+.block-pool-hidde{
+  opacity: 0;
+  transition: .5s ease 1s;
 }

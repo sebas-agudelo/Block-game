@@ -7,12 +7,10 @@ const livesWrapper = document.getElementById('lives');
 const restartBtn = document.getElementById('restart-btn');
 const playBtn = document.getElementById('play-btn');
 
-
-
 const gridSize = 10;
 const blockSize = 32; 
+let maxScore = false;
 let score = 0;
-let lifes = 15;
 
 const shapeColors = {
     Z: 'e000ff',
@@ -147,8 +145,8 @@ const handleDrop = (event) => {
         alert('Placera blocken inuti ruterna')
         
     } else{
-        lifesScore();
-        // blockScore(blockShapeKey);
+        pointsFuction();
+        blockScore(blockShapeKey);
     }
 };
 
@@ -198,7 +196,7 @@ const handleTouchStart = (event) => {
     touchOffsetX = Math.floor((touch.clientX - blockRect.left)); 
     touchOffsetY = Math.floor((touch.clientY - blockRect.top)); 
 
-    // Create a placeholder to keep the space in the block pool
+ 
     const placeholder = document.createElement('div');
     placeholder.classList.add('block-container-placeholder');
     blockContainer.parentNode.insertBefore(placeholder, blockContainer);
@@ -275,8 +273,7 @@ const handleTouchEnd = (event) => {
     activeBlock = null;
 };
 
-
-/* Skapar funktionalitet för poäng när man får en hel rad */
+    /* Skapar funktionalitet för poäng när man får en hel rad */
 const checkCompletedRows = () => {
     for (let row = 0; row < gridSize; row++) {
         let isRowComplete = true;
@@ -292,6 +289,7 @@ const checkCompletedRows = () => {
         if (isRowComplete) {
             score += 10; 
             scoreSpan.innerText = score;
+            progressBar.style.width = `${Math.min((score / 25) * 100, 100)}%`
 
             const allShapeColors = Object.values(shapeColors);
             allShapeColors.forEach((shapeColor) => {
@@ -302,8 +300,8 @@ const checkCompletedRows = () => {
                     slot.classList.add('block-slot');
                 }
             });
-            lifesScore()
         }
+        pointsFuction();
     }
 };
 
@@ -323,8 +321,7 @@ const checkCompletedColumns = () => {
         if (isColComplete) {
             score += 10; 
             scoreSpan.innerText = score;
-            progressBar.style.width = `${Math.min((score / 40) * 100, 100)}%`
-
+            progressBar.style.width = `${Math.min((score / 25) * 100, 100)}%`
 
             const allShapeColors = Object.values(shapeColors);
             
@@ -335,40 +332,22 @@ const checkCompletedColumns = () => {
                     slot.classList.remove(shapeColor)
                     slot.classList.add('block-slot');
                 }
-
             })
-
-            lifesScore()
-  
+            
         }
+        pointsFuction();
     }
 };
 
-const maxLifes = () => {
-    let oneLifeGone = true;
-
-    if(oneLifeGone){
-
-        lifes --; 
-        livesWrapper.innerText = lifes;
-    }
-
-    if(lifes <= 0){
-        alert('DU HAR FÖRLORAT');
-        location.reload();
-    }
-}
-const lifesScore = () => {
-
-   if(score >= 45 ){
-        alert('GRATTIS DU HAR VUNNITTTTTT ')
-   
-        location.reload();
+const pointsFuction = () => {
+   if(score >= 25 ){
+        maxScore = true;
+        blockPool.classList.add('block-pool-hidde')
     } 
 };
 
 const blockScore = (blockShapeKey) => {
-    
+
     if (blockShapeKey === 'Z' || 
         blockShapeKey === 'T' || 
         blockShapeKey === 'O') {
@@ -376,28 +355,26 @@ const blockScore = (blockShapeKey) => {
     
     } else if(blockShapeKey === 'L' || 
         blockShapeKey === 'M'){
-            score +=3
+        score +=3
 
     } else if(blockShapeKey === 'N' || 
         blockShapeKey === 'I'){
-            score +=2
+        score +=2
 
     } else if(blockShapeKey === 'U'){
-            score +=1
+        score +=1
 
     }
-
+    
+    score = Math.min(score, 25)
     scoreSpan.innerHTML = score;
+    progressBar.style.width = `${Math.min((score / 25) * 100, 100)}%`
 
-    if(score >= 35 ){
-        lifesScore(); 
-
+    if(score >= 25 ){
+        pointsFuction(); 
+        
     }
 };
 
-
 createGrid();
 createBlockPool();
-
-
-
