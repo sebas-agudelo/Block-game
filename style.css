@@ -79,23 +79,34 @@ body {
   border-radius: 20%;
 }
 
-.wrapper #block-pool {
+.wrapper #block-pool{
   width: 90vw;
-  max-width: 350px;
-
   height: 100px;
-  overflow: hidden;
+  max-width: 315px;
+  /* overflow: hidden; */
 
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Fördela dina containers jämnt */
+  gap: 10px; /* Litet mellanrum mellan block-containers om det behövs */
+  justify-items: center; /* Centrerar blocken i sina respektive containers */
+  
 
-  gap: 15px;
+
+
+  
 }
 
 #block-pool .block-container {
   display: grid;
-  gap: 2px;
+  /* gap: 2px; Ingen mellanrum mellan blocken */
+  grid-template-columns: repeat(auto-fit, minmax(28px, 1fr)); /* Skapar kolumner baserat på blockens storlek */
+  grid-template-rows: repeat(auto-fit, minmax(28px, 1fr));    /* Skapar rader dynamiskt */
+  width: auto;  /* Anpassar bredden beroende på innehållet */
+  height: 56px; /* Anpassar höjden beroende på innehållet */
+  
+  justify-content: center; /* Centrerar blocken i container */
+  align-content: center;
+
 }
 
 .block-container .block {
@@ -107,7 +118,10 @@ body {
   cursor: grab;
   border: 1px double white;
   border-radius: 20%;
+  margin: 0; /* Se till att det inte finns några marginaler */
+  padding: 0; /* Tar bort eventuell inre fyllning */
 }
+
 
 .block.e000ff {
   background-color: #e000ff;
@@ -136,3 +150,9 @@ body {
 
 
 
+.block-container-placeholder {
+  width: 84px;
+  max-width: 84px;
+  height: 100%; 
+  visibility: hidden; /* Keep it invisible but occupying space */
+}
