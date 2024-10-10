@@ -12,22 +12,21 @@ const blockSize = 32;
 let maxScore = false;
 let score = 0;
 
-const shapeColors = {
-    Z: 'e000ff',
-    T: 'blue', 
-    O: 'green',
-    U: 'ff7000',
-    L: 'yellow',
-    I: 'black',
-    M: 'white',
-    N: 'nnn'
+
+const shapeImages  = {
+    // Z: "../images/gottochblandat.png",
+    T: "../images/gottochblandat2.png",
+    O: "../images/gottochblandat3.png", 
+    U: "../images/gottochblandat4.png"
+    // Lägg till fler bilder vid behov
 };
+
 
 const shapes = {
     // Z: [[0, 0], [0, 1], [1, 1], [1, 2]], 
-    // T: [[0, 1], [1, 0], [1, 1], [1, 2]], 
+    T: [[0, 1], [1, 0], [1, 1], [1, 2]], 
     O: [[0, 0], [0, 1], [1, 0], [1, 1]], 
-    // U: [[0, 0]],
+    U: [[0, 0]],
     // L: [[0, 0], [1, 0], [1, 1]], 
     // I: [[0, 0], [1, 0]], 
     // M: [[0, 0], [0, 1], [0, 2]],
@@ -59,8 +58,8 @@ const createBlockPool = () => {
 const generateBlock = (id) => {
     const shapeKey = getRandomShapeKey();
     const shape = shapes[shapeKey];
+    const blockImage = shapeImages[shapeKey];
 
-    const blockColor = shapeColors[shapeKey];
     const blockContainer = document.createElement('div');
     blockContainer.classList.add('block-container');
     blockContainer.dataset.id = id;
@@ -76,15 +75,25 @@ const generateBlock = (id) => {
 
     shape.forEach(([row, col]) => {
         const block = document.createElement('div');
-        block.classList.add('block', blockColor);
+        block.classList.add('block', blockImage);
         block.style.gridRowStart = row + 1;
         block.style.gridColumnStart = col + 1;
+        
+        // Check for valid image before assigning it
+        if (blockImage) {
+            block.style.backgroundImage = `url(${blockImage})`;
+            block.style.backgroundSize = 'cover';
+            block.style.backgroundPosition = 'center';
+        } else {
+            console.error(`Image not found for shape: ${shapeKey}`); // Error message
+        }
+
         blockContainer.appendChild(block);
     });
 
- 
     return blockContainer;
 };
+
 
 const getRandomShapeKey = () => {
     const shapeKeys = Object.keys(shapes);
@@ -163,21 +172,36 @@ const canPlaceShape = (row, col, shape) => {
     });
 };
 
-const placeShape = (row, col, shape, color) => {
+const placeShape = (row, col, shape) => {
+    const shapeKey = getRandomShapeKey();
+    const blockImage = shapeImages[shapeKey];  // Hämta bild för aktuell form
+
+    console.log('Placerar bild för shape:', shapeKey, 'med URL:', blockImage); // Debugging
+
     shape.forEach(([r, c]) => {
         const targetRow = row + r;
         const targetCol = col + c;
         const slot = document.querySelector(`[data-row="${targetRow}"][data-col="${targetCol}"]`);
 
-        slot.classList.remove(...Array.from(slot.classList).filter(cls => cls !== 'block-slot'));
-        slot.classList.remove('block-slot');
-        slot.classList.add('block', color); 
+        // Här kontrollerar vi att slot finns innan vi sätter bakgrundsbild
+        if (slot) {
+            slot.classList.remove(...Array.from(slot.classList).filter(cls => cls !== 'block-slot'));
+            slot.classList.remove('block-slot');
+            slot.classList.add('block', shapeKey);
+
+            // Sätt bakgrundsbilden på rutorna
+            slot.style.backgroundImage = `url(${blockImage})`;
+            slot.style.backgroundSize = 'cover';
+            slot.style.backgroundPosition = 'center';
+        }
     });
 
     checkCompletedRows();
     checkCompletedColumns();
-    
 };
+
+
+
 
 let activeBlock = null;
 let touchOffsetX = 0;
@@ -208,7 +232,6 @@ const handleTouchStart = (event) => {
     blockContainer.style.position = 'absolute';
     blockContainer.style.zIndex = '1000';
 };
-
 
 const handleTouchMove = (event) => {
     if (!activeBlock) return; // Om inget block är valt, returnera.
@@ -289,36 +312,39 @@ const handleTouchEnd = (event) => {
 };
 
     /* Skapar funktionalitet för poäng när man får en hel rad */
-const checkCompletedRows = () => {
-    for (let row = 0; row < gridSize; row++) {
-        let isRowComplete = true;
-
-        for (let col = 0; col < gridSize; col++) {
-            const slot = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-            if (!slot.classList.contains('block')) {
-                isRowComplete = false;
-                break;
+    const checkCompletedRows = () => {
+        for (let row = 0; row < gridSize; row++) {
+            let isRowComplete = true;
+    
+            // Kontrollera om hela raden är komplett
+            for (let col = 0; col < gridSize; col++) {
+                const slot = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                if (!slot.classList.contains('block')) {
+                    isRowComplete = false;
+                    break;
+                }
             }
-        }
-
-        if (isRowComplete) {
-            score += 10; 
-            scoreSpan.innerText = score;
-            progressBar.style.width = `${Math.min((score / 25) * 100, 100)}%`
-
-            const allShapeColors = Object.values(shapeColors);
-            allShapeColors.forEach((shapeColor) => {
+    
+            // Återställ blockslotarna om raden är komplett
+            if (isRowComplete) {
+                score += 10; 
+                scoreSpan.innerText = score;
+                progressBar.style.width = `${Math.min((score / 25) * 100, 100)}%`;
+    
                 for (let col = 0; col < gridSize; col++) {
                     const slot = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-                    slot.classList.remove('block');
-                    slot.classList.remove(shapeColor)
-                    slot.classList.add('block-slot');
+                    
+                    // Ta bort alla klasser och inline-stilar
+                    slot.className = ''; // Rensa alla klasser
+                    slot.style.cssText = ''; // Ta bort alla inline-stilar
+                    
+                    // Lägg tillbaka block-slot klassen
+                    slot.classList.add('block-slot'); // Återställ klassnamn till block-slot
                 }
-            });
+            }
         }
-        pointsFuction();
-    }
-};
+    };
+    
 
 /* Skapar funktionalitet för poäng när man får en hel kolum */
 const checkCompletedColumns = () => {
@@ -338,7 +364,7 @@ const checkCompletedColumns = () => {
             scoreSpan.innerText = score;
             progressBar.style.width = `${Math.min((score / 25) * 100, 100)}%`
 
-            const allShapeColors = Object.values(shapeColors);
+            const allShapeColors = Object.values(shapeImages);
             
             allShapeColors.forEach((shapeColor) => {
                 for (let row = 0; row < gridSize; row++) {
