@@ -11,19 +11,19 @@ const gridSize = 10;
 const blockSize = 32; 
 let maxScore = false;
 let score = 0;
-
+let moves = 15;
 
 const shapeImages  = {
-    // Z: "../images/gottochblandat.png",
-    T: "../images/gottochblandat2.png",
-    O: "../images/gottochblandat3.png", 
-    U: "../images/gottochblandat4.png"
+    Z: "images/gottochblandat.png",
+    T: "images/gottochblandat2.png",
+    O: "images/kex.jpg",
+    U: "images/gottochblandat4.png"
     // Lägg till fler bilder vid behov
 };
 
 
 const shapes = {
-    // Z: [[0, 0], [0, 1], [1, 1], [1, 2]], 
+    Z: [[0, 0], [0, 1], [1, 1], [1, 2]], 
     T: [[0, 1], [1, 0], [1, 1], [1, 2]], 
     O: [[0, 0], [0, 1], [1, 0], [1, 1]], 
     U: [[0, 0]],
@@ -60,6 +60,10 @@ const generateBlock = (id) => {
     const shape = shapes[shapeKey];
     const blockImage = shapeImages[shapeKey];
 
+    // Debugging statements
+    console.log('Generating block for shape:', shapeKey);
+    console.log('Block Image:', blockImage); // Check if the image path is correct
+
     const blockContainer = document.createElement('div');
     blockContainer.classList.add('block-container');
     blockContainer.dataset.id = id;
@@ -69,21 +73,18 @@ const generateBlock = (id) => {
     blockContainer.addEventListener('dragstart', handleDragStart);
     blockContainer.addEventListener('dragend', handleDragEnd); 
 
-    blockContainer.addEventListener('touchstart', handleTouchStart);
-    blockContainer.addEventListener('touchmove', handleTouchMove);
-    blockContainer.addEventListener('touchend', handleTouchEnd);
-
     shape.forEach(([row, col]) => {
         const block = document.createElement('div');
-        block.classList.add('block', blockImage);
+        block.classList.add('block');
         block.style.gridRowStart = row + 1;
         block.style.gridColumnStart = col + 1;
-        
+
         // Check for valid image before assigning it
         if (blockImage) {
             block.style.backgroundImage = `url(${blockImage})`;
-            block.style.backgroundSize = 'cover';
-            block.style.backgroundPosition = 'center';
+            block.style.backgroundSize = 'contain';
+            block.style.backgroundRepeat = 'no-repeat';
+            console.log(`Setting background image for block: ${blockImage}`); // Log the image being set
         } else {
             console.error(`Image not found for shape: ${shapeKey}`); // Error message
         }
@@ -95,9 +96,13 @@ const generateBlock = (id) => {
 };
 
 
+
+
 const getRandomShapeKey = () => {
     const shapeKeys = Object.keys(shapes);
-    return shapeKeys[Math.floor(Math.random() * shapeKeys.length)];
+    const randomKey = shapeKeys[Math.floor(Math.random() * shapeKeys.length)];
+    console.log('Randomly selected shapeKey:', randomKey); // Debugging
+    return randomKey;
 };
 
 /* Skapar drag funktionalitet för webbläsaren */
@@ -130,7 +135,7 @@ const handleDrop = (event) => {
     
     const blockId = event.dataTransfer.getData('block-id');
     const blockShapeKey = event.dataTransfer.getData('block-shape');
-    const blockColor = event.dataTransfer.getData('block-color');
+    // const blockColor = event.dataTransfer.getData('block-color');
     const offsetX = parseInt(event.dataTransfer.getData('offset-x'));
     const offsetY = parseInt(event.dataTransfer.getData('offset-y'));
     const shape = shapes[blockShapeKey];
@@ -144,7 +149,7 @@ const handleDrop = (event) => {
     let blockPlaced = false;
 
     if (canPlaceShape(startRow, startCol, shape)) {
-        placeShape(startRow, startCol, shape, blockColor);
+        placeShape(startRow, startCol, shape, blockShapeKey);
         document.querySelector(`[data-id="${blockId}"]`).remove();
         blockPlaced = true
         createBlockPool();
@@ -172,33 +177,38 @@ const canPlaceShape = (row, col, shape) => {
     });
 };
 
-const placeShape = (row, col, shape) => {
-    const shapeKey = getRandomShapeKey();
-    const blockImage = shapeImages[shapeKey];  // Hämta bild för aktuell form
+const placeShape = (row, col, shape, shapeKey) => {
+    const blockImage = shapeImages[shapeKey];  // Get the image for the current shape
 
-    console.log('Placerar bild för shape:', shapeKey, 'med URL:', blockImage); // Debugging
+    // Debugging
+    console.log('Placing image for shape:', shapeKey, 'with URL:', blockImage); // Debugging
 
     shape.forEach(([r, c]) => {
         const targetRow = row + r;
         const targetCol = col + c;
         const slot = document.querySelector(`[data-row="${targetRow}"][data-col="${targetCol}"]`);
 
-        // Här kontrollerar vi att slot finns innan vi sätter bakgrundsbild
+        // Check if the slot exists before setting the background image
         if (slot) {
             slot.classList.remove(...Array.from(slot.classList).filter(cls => cls !== 'block-slot'));
             slot.classList.remove('block-slot');
             slot.classList.add('block', shapeKey);
 
-            // Sätt bakgrundsbilden på rutorna
-            slot.style.backgroundImage = `url(${blockImage})`;
-            slot.style.backgroundSize = 'cover';
-            slot.style.backgroundPosition = 'center';
+            // Set the background image for the slots
+            if (blockImage) {
+                slot.style.backgroundImage = `url(${blockImage})`;
+                slot.style.backgroundSize = 'cover';
+                slot.style.backgroundPosition = 'center';
+            } else {
+                console.error(`Image not found for shape: ${shapeKey}`); // Log an error if the image URL is undefined
+            }
         }
     });
 
     checkCompletedRows();
     checkCompletedColumns();
 };
+
 
 
 

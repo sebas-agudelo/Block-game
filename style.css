@@ -91,6 +91,7 @@ body {
   display: grid;
   gap: 2px;
   border: 1px solid;
+
 }
 
 .block-container .block {
