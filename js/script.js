@@ -73,6 +73,10 @@ const generateBlock = (id) => {
     blockContainer.addEventListener('dragstart', handleDragStart);
     blockContainer.addEventListener('dragend', handleDragEnd); 
 
+    blockContainer.addEventListener('touchstart', handleTouchStart);
+    blockContainer.addEventListener('touchmove', handleTouchMove);
+    blockContainer.addEventListener('touchend', handleTouchEnd);
+
     shape.forEach(([row, col]) => {
         const block = document.createElement('div');
         block.classList.add('block');
@@ -100,9 +104,7 @@ const generateBlock = (id) => {
 
 const getRandomShapeKey = () => {
     const shapeKeys = Object.keys(shapes);
-    const randomKey = shapeKeys[Math.floor(Math.random() * shapeKeys.length)];
-    console.log('Randomly selected shapeKey:', randomKey); // Debugging
-    return randomKey;
+    return shapeKeys[Math.floor(Math.random() * shapeKeys.length)];
 };
 
 /* Skapar drag funktionalitet för webbläsaren */
@@ -279,7 +281,7 @@ const handleTouchEnd = (event) => {
         
         if (nearestSlot && nearestSlot.classList.contains('block-slot')) {
             const blockShapeKey = activeBlock.dataset.shape;
-            const blockColor = activeBlock.firstChild.classList[1];
+            // const blockColor = activeBlock.firstChild.classList[1];
             const offsetX = Math.floor(touchOffsetX / blockSize);
             const offsetY = Math.floor(touchOffsetY / blockSize);
             const shape = shapes[blockShapeKey];
@@ -290,7 +292,7 @@ const handleTouchEnd = (event) => {
             let blockPlaced = false;
 
             if (canPlaceShape(startRow, startCol, shape)) {
-                placeShape(startRow, startCol, shape, blockColor);
+                placeShape(startRow, startCol, shape, blockShapeKey);
                 blockPlaced = true
                 activeBlock.remove();
                 createBlockPool();
