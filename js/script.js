@@ -13,12 +13,23 @@ let maxScore = false;
 let score = 0;
 let moves = 15;
 
+window.addEventListener('keydown', function(event) {
+    // Check for Ctrl + '+' or Ctrl + '-' or Ctrl + '='
+    if (event.ctrlKey && (event.key === '+' || event.key === '-' || event.key === '=')) {
+        event.preventDefault();
+    }
+});
+
+
 const shapeImages  = {
-    Z: "images/gottochblandat.png",
-    T: "images/gottochblandat2.png",
-    O: "images/kex.jpg",
-    U: "images/gottochblandat4.png"
-    // Lägg till fler bilder vid behov
+    Z: "images/Haribo-Rainbow.png",
+    T: "images/Haribo-Nappar.png",
+    O: "images/Haribo-Stjärn-Mix.png",
+    U: "images/Haribo-Fruktilurer.png",
+    L: "images/Haribo-Bönar.png", 
+    I: "images/Haribo-Stardust.png", 
+    M: "images/haribo-Psiche.png",
+    N: "images/Haribo-Nappar-Lakrits.png"
 };
 
 
@@ -27,10 +38,10 @@ const shapes = {
     T: [[0, 1], [1, 0], [1, 1], [1, 2]], 
     O: [[0, 0], [0, 1], [1, 0], [1, 1]], 
     U: [[0, 0]],
-    // L: [[0, 0], [1, 0], [1, 1]], 
-    // I: [[0, 0], [1, 0]], 
-    // M: [[0, 0], [0, 1], [0, 2]],
-    // N: [[0, 0], [0, 1]]
+    L: [[0, 0], [1, 0], [1, 1]], 
+    I: [[0, 0], [1, 0]], 
+    M: [[0, 0], [0, 1], [0, 2]],
+    N: [[0, 0], [0, 1]]
 };
 
 const createGrid = () => {
@@ -60,10 +71,6 @@ const generateBlock = (id) => {
     const shape = shapes[shapeKey];
     const blockImage = shapeImages[shapeKey];
 
-    // Debugging statements
-    console.log('Generating block for shape:', shapeKey);
-    console.log('Block Image:', blockImage); // Check if the image path is correct
-
     const blockContainer = document.createElement('div');
     blockContainer.classList.add('block-container');
     blockContainer.dataset.id = id;
@@ -83,14 +90,13 @@ const generateBlock = (id) => {
         block.style.gridRowStart = row + 1;
         block.style.gridColumnStart = col + 1;
 
-        // Check for valid image before assigning it
         if (blockImage) {
             block.style.backgroundImage = `url(${blockImage})`;
             block.style.backgroundSize = 'contain';
             block.style.backgroundRepeat = 'no-repeat';
-            console.log(`Setting background image for block: ${blockImage}`); // Log the image being set
+            console.log(`Setting background image for block: ${blockImage}`); 
         } else {
-            console.error(`Image not found for shape: ${shapeKey}`); // Error message
+            console.error(`Image not found for shape: ${shapeKey}`); 
         }
 
         blockContainer.appendChild(block);
@@ -98,9 +104,6 @@ const generateBlock = (id) => {
 
     return blockContainer;
 };
-
-
-
 
 const getRandomShapeKey = () => {
     const shapeKeys = Object.keys(shapes);
@@ -210,10 +213,6 @@ const placeShape = (row, col, shape, shapeKey) => {
     checkCompletedRows();
     checkCompletedColumns();
 };
-
-
-
-
 
 let activeBlock = null;
 let touchOffsetX = 0;
@@ -341,7 +340,7 @@ const handleTouchEnd = (event) => {
             if (isRowComplete) {
                 score += 10; 
                 scoreSpan.innerText = score;
-                progressBar.style.width = `${Math.min((score / 25) * 100, 100)}%`;
+                progressBar.style.width = `${Math.min((score / 15) * 100, 100)}%`;
     
                 for (let col = 0; col < gridSize; col++) {
                     const slot = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
@@ -374,7 +373,7 @@ const checkCompletedColumns = () => {
         if (isColComplete) {
             score += 10; 
             scoreSpan.innerText = score;
-            progressBar.style.width = `${Math.min((score / 25) * 100, 100)}%`
+            progressBar.style.width = `${Math.min((score / 15) * 100, 100)}%`
 
             const allShapeColors = Object.values(shapeImages);
             
@@ -393,7 +392,7 @@ const checkCompletedColumns = () => {
 };
 
 const pointsFuction = () => {
-   if(score >= 25 ){
+   if(score >= 15 ){
         maxScore = true;
         blockPool.classList.add('block-pool-hidde')
     } 
@@ -419,11 +418,11 @@ const blockScore = (blockShapeKey) => {
 
     }
     
-    score = Math.min(score, 25)
+    score = Math.min(score, 15)
     scoreSpan.innerHTML = score;
-    progressBar.style.width = `${Math.min((score / 25) * 100, 100)}%`
+    progressBar.style.width = `${Math.min((score / 15) * 100, 100)}%`
 
-    if(score >= 25 ){
+    if(score >= 15 ){
         pointsFuction(); 
         
     }
