@@ -2,16 +2,17 @@ const gameContainer = document.getElementById("game-container");
 const progressBar = document.getElementById("progress-done");
 const blockPool = document.getElementById("block-pool");
 const scoreSpan = document.getElementById("score");
-const livesWrapper = document.getElementById("lives");
+const movesWrapper = document.getElementById("moves");
 const gameSelect = document.getElementById("game-select");
-const playWithPoints = document.getElementById("points");
-const playWithMoves = document.getElementById("moves");
+const playWithPoints = document.getElementById("pointsBtn");
+const playWithMoves = document.getElementById("movesBtn");
 
 const gridSize = 10;
 const blockSize = 32;
-let gameMode = "points";
+let gameMode = "moves";
 let score = 0;
-let moves = 15;
+let gameover = 20;
+let moves = gameover;
 
 window.addEventListener("keydown", function (event) {
   // Check for Ctrl + '+' or Ctrl + '-' or Ctrl + '='
@@ -170,7 +171,7 @@ const handleDrop = (event) => {
 
   const blockId = event.dataTransfer.getData("block-id");
   const blockShapeKey = event.dataTransfer.getData("block-shape");
-  // const blockColor = event.dataTransfer.getData('block-color');
+
   const offsetX = parseInt(event.dataTransfer.getData("offset-x"));
   const offsetY = parseInt(event.dataTransfer.getData("offset-y"));
   const shape = shapes[blockShapeKey];
@@ -185,21 +186,25 @@ const handleDrop = (event) => {
 
   if (canPlaceShape(startRow, startCol, shape)) {
     placeShape(startRow, startCol, shape, blockShapeKey);
-    document.querySelector(`[data-id="${blockId}"]`).remove();
+
+    // Hitta det placerade blocket och ersätt det med ett nytt
+    const placedBlock = document.querySelector(`[data-id="${blockId}"]`);
+    if (placedBlock) {
+      const newBlock = generateBlock(blockId);
+      placedBlock.replaceWith(newBlock);
+    }
     blockPlaced = true;
-    createBlockPool();
   }
 
   if (!blockPlaced) {
     return;
   }
   if (gameMode === "points") {
-    pointsFuction();
+    gameOverFunction();
     blockScore(blockShapeKey);
   } else if (gameMode === "moves") {
-    movesProgress();
+    gameOverFunction();
     blockScore(blockShapeKey);
-    
   }
 };
 
@@ -347,12 +352,12 @@ const handleTouchEnd = (event) => {
         activeBlock.style.position = "static";
         activeBlock.style.zIndex = "1";
         activeBlock = null;
-      } if (gameMode === "points") {
+      }
+      if (gameMode === "points") {
         pointsFuction();
-        blockScore(blockShapeKey);
+        // blockScore(blockShapeKey);
       } else if (gameMode === "moves") {
         movesProgress();
-        
       }
     }
   }
@@ -387,8 +392,11 @@ const checkCompletedRows = () => {
     // Återställ blockslotarna om raden är komplett
     if (isRowComplete) {
       score += 10;
-      scoreSpan.innerText = score;
-      progressBar.style.width = `${Math.min((score / 15) * 100, 100)}%`;
+      if (scoreSpan) {
+        scoreSpan.innerText = score;
+      } else if (progressBar) {
+        progressBar.style.width = `${Math.min((score / gameover) * 100, 100)}%`;
+      }
 
       for (let col = 0; col < gridSize; col++) {
         const slot = document.querySelector(
@@ -396,8 +404,8 @@ const checkCompletedRows = () => {
         );
 
         // Ta bort alla klasser och inline-stilar
-        slot.className = ""; // Rensa alla klasser
-        slot.style.cssText = ""; // Ta bort alla inline-stilar
+        slot.className = "";
+        slot.style.cssText = "";
         slot.classList.add("block-slot");
       }
     }
@@ -421,8 +429,13 @@ const checkCompletedColumns = () => {
 
     if (isColComplete) {
       score += 10;
-      scoreSpan.innerText = score;
-      progressBar.style.width = `${Math.min((score / 15) * 100, 100)}%`;
+      if(scoreSpan){
+        scoreSpan.innerText = score;
+
+      } else if(progressBar){
+        progressBar.style.width = `${Math.min((score / gameover) * 100, 100)}%`;
+
+      }
 
       const allShapeColors = Object.values(shapeImages);
 
@@ -431,69 +444,72 @@ const checkCompletedColumns = () => {
           const slot = document.querySelector(
             `[data-row="${row}"][data-col="${col}"]`
           );
-          slot.classList.remove("block");
-          slot.classList.remove(shapeColor);
+
+          // Ta bort alla klasser och inline-stilar
+          slot.className = "";
+          slot.style.cssText = "";
           slot.classList.add("block-slot");
         }
       });
     }
-    pointsFuction();
+    // pointsFuction();
   }
-};
-
-const pointsFuction = () => {
-  if (gameMode === 'points' && score >= 15) {
-    blockPool.classList.add("block-pool-hidde");
-  } 
 };
 
 const blockScore = (blockShapeKey) => {
-  if (gameMode === "points") {
-    if (
-      blockShapeKey === "Z" ||
-      blockShapeKey === "T" ||
-      blockShapeKey === "O"
-    ) {
-      score += 4;
-    } else if (blockShapeKey === "L" || blockShapeKey === "M") {
-      score += 3;
-    } else if (blockShapeKey === "N" || blockShapeKey === "I") {
-      score += 2;
-    } else if (blockShapeKey === "U") {
-      score += 1;
+  if (blockShapeKey === "Z" || blockShapeKey === "T" || blockShapeKey === "O") {
+    score += 4;
+  } else if (blockShapeKey === "L" || blockShapeKey === "M") {
+    score += 3;
+  } else if (blockShapeKey === "N" || blockShapeKey === "I") {
+    score += 2;
+  } else if (blockShapeKey === "U") {
+    score += 1;
+  }
+
+  if (gameMode === "points" || (gameMode === "points" && score >= gameover)) {
+    score = Math.min(score, gameover);
+
+    if (scoreSpan) {
+      scoreSpan.innerHTML = score;
+    } else if (progressBar) {
+      progressBar.style.width = `${Math.min((score / gameover) * 100, 100)}%`;
     }
 
-    score = Math.min(score, 15);
+    gameOverFunction();
+  } else {
     scoreSpan.innerHTML = score;
-    progressBar.style.width = `${Math.min((score / 15) * 100, 100)}%`;
+  }
+};
 
-    if (score >= 15) {
-      pointsFuction();
+const gameOverFunction = () => {
+  if (gameMode === "points" && score >= gameover) {
+    blockPool.classList.add("block-pool-hidde");
+  } else if (gameMode === "moves") {
+    gameover--;
+    if(movesWrapper){
+      movesWrapper.innerText = `${gameover}`;
+
+    } if(progressBar){
+      progressBar.style.width = `${Math.max((gameover / moves) * 100, 0)}%`;
+
+    }
+
+    if (gameover <= 0) {
+      blockPool.classList.add("block-pool-hidde");
     }
   }
 };
 
-const movesProgress = () => {
-  if (gameMode === "moves") {
-    moves--;
-    livesWrapper.innerText = `${moves}`;
-    progressBar.style.width = `${Math.max((moves / 15) * 100, 0)}%`;
+// playWithPoints.addEventListener("click", () => {
+//   gameMode = "points";
+//   progressBar.style.width = "0%";
+// });
 
-    if (moves <= 0) {
-        blockPool.classList.add("block-pool-hidde");
-      }
-  }
-};
-
-playWithPoints.addEventListener("click", () => {
-  gameMode = "points";
-
-});
-
-playWithMoves.addEventListener("click", () => {
-  gameMode = "moves";
- 
-});
+// playWithMoves.addEventListener("click", () => {
+//   gameMode = "moves";
+//   progressBar.style.width = "100%";
+// });
 
 createBlockPool();
 createGrid();
