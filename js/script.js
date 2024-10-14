@@ -7,7 +7,7 @@ const gameSelect = document.getElementById("game-select");
 
 const gridSize = 10;
 const blockSize = 32;
-let gameMode = "moves";
+let gameMode = "points";
 let score = 0;
 let gameover = 20;
 let moves = gameover;
@@ -387,26 +387,28 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
-      // Återställ blockslotarna om raden är komplett
       if (isRowComplete) {
         score += 10;
         if (scoreSpan) {
           scoreSpan.innerText = score;
         } else if (progressBar) {
-          progressBar.style.width = `${Math.min(
-            (score / gameover) * 100,
-            100
-          )}%`;
+          progressBar.style.width = `${Math.min((score / gameover) * 100, 100)}%`;
         }
 
         for (let col = 0; col < gridSize; col++) {
           const slot = document.querySelector(
             `[data-row="${row}"][data-col="${col}"]`
           );
+          slot.classList.add("slide-out-bck-center");
 
-          slot.className = "";
-          slot.style.cssText = "";
-          slot.classList.add("block-slot");
+          
+          slot.addEventListener('animationend', () => {
+
+            slot.className = "";
+            slot.style.cssText = "";
+            slot.classList.add("block-slot");
+          })
+       
         }
       }
     }
@@ -446,10 +448,14 @@ document.addEventListener("DOMContentLoaded", function () {
               `[data-row="${row}"][data-col="${col}"]`
             );
 
-            // Ta bort alla klasser och inline-stilar
+            slot.classList.add("slide-out-bck-center");
+          
+          slot.addEventListener('animationend', () => {
+
             slot.className = "";
             slot.style.cssText = "";
             slot.classList.add("block-slot");
+          })
           }
         });
       }
