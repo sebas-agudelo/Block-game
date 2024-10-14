@@ -4,8 +4,6 @@ const blockPool = document.getElementById("block-pool");
 const scoreSpan = document.getElementById("score");
 const movesWrapper = document.getElementById("moves");
 const gameSelect = document.getElementById("game-select");
-const playWithPoints = document.getElementById("pointsBtn");
-const playWithMoves = document.getElementById("movesBtn");
 
 const gridSize = 10;
 const blockSize = 32;
@@ -13,6 +11,8 @@ let gameMode = "moves";
 let score = 0;
 let gameover = 20;
 let moves = gameover;
+
+document.addEventListener('DOMContentLoaded', function() { 
 
 window.addEventListener("keydown", function (event) {
   // Check for Ctrl + '+' or Ctrl + '-' or Ctrl + '='
@@ -104,6 +104,7 @@ const generateBlock = (id) => {
 
   const blockContainer = document.createElement("div");
   blockContainer.classList.add("block-container");
+  blockContainer.classList.add('scale-in-center');
   blockContainer.dataset.id = id;
   blockContainer.dataset.shape = shapeKey;
   blockContainer.draggable = true;
@@ -343,29 +344,32 @@ const handleTouchEnd = (event) => {
 
       if (canPlaceShape(startRow, startCol, shape)) {
         placeShape(startRow, startCol, shape, blockShapeKey);
-        blockPlaced = true;
-        activeBlock.remove();
-        createBlockPool();
-      }
+
+          const newBlock = generateBlock(blockShapeKey);
+          activeBlock.replaceWith(newBlock);
+          activeBlock.remove();
+          blockPlaced = true;
+            
+        }
 
       if (!blockPlaced) {
         activeBlock.style.position = "static";
         activeBlock.style.zIndex = "1";
         activeBlock = null;
       }
-      if (gameMode === "points") {
-        pointsFuction();
-        // blockScore(blockShapeKey);
-      } else if (gameMode === "moves") {
-        movesProgress();
-      }
+      if (gameMode === "points" || gameMode === 'moves' ) {
+        gameOverFunction()
+        blockScore(blockShapeKey);
+      } 
     }
   }
   // Remove placeholder
-  const placeholder = document.querySelector(".block-container-placeholder");
-  if (placeholder) {
-    placeholder.remove();
-  }
+    const placeholder = document.querySelector(".block-container-placeholder");
+    if(placeholder){
+      placeholder.remove();
+      
+    };
+  
 
   // Reset block's position and z-index
   activeBlock.style.position = "static";
@@ -403,16 +407,16 @@ const checkCompletedRows = () => {
           `[data-row="${row}"][data-col="${col}"]`
         );
 
-        // Ta bort alla klasser och inline-stilar
         slot.className = "";
         slot.style.cssText = "";
-        slot.classList.add("block-slot");
+        slot.classList.add("block-slot"); 
+        
       }
     }
   }
 };
 
-/* Skapar funktionalitet för poäng när man får en hel kolum */
+/* Skapar funktionalitet för poäng när man får en hel kolumner */
 const checkCompletedColumns = () => {
   for (let col = 0; col < gridSize; col++) {
     let isColComplete = true;
@@ -452,7 +456,6 @@ const checkCompletedColumns = () => {
         }
       });
     }
-    // pointsFuction();
   }
 };
 
@@ -467,26 +470,27 @@ const blockScore = (blockShapeKey) => {
     score += 1;
   }
 
-  if (gameMode === "points" || (gameMode === "points" && score >= gameover)) {
+  if (gameMode === "points" ) {
     score = Math.min(score, gameover);
 
     if (scoreSpan) {
       scoreSpan.innerHTML = score;
-    } else if (progressBar) {
+    } 
+    if (progressBar) {
       progressBar.style.width = `${Math.min((score / gameover) * 100, 100)}%`;
     }
 
     gameOverFunction();
-  } else {
-    scoreSpan.innerHTML = score;
-  }
+  } 
 };
 
 const gameOverFunction = () => {
   if (gameMode === "points" && score >= gameover) {
     blockPool.classList.add("block-pool-hidde");
+
   } else if (gameMode === "moves") {
     gameover--;
+
     if(movesWrapper){
       movesWrapper.innerText = `${gameover}`;
 
@@ -501,15 +505,7 @@ const gameOverFunction = () => {
   }
 };
 
-// playWithPoints.addEventListener("click", () => {
-//   gameMode = "points";
-//   progressBar.style.width = "0%";
-// });
-
-// playWithMoves.addEventListener("click", () => {
-//   gameMode = "moves";
-//   progressBar.style.width = "100%";
-// });
-
 createBlockPool();
 createGrid();
+
+});
