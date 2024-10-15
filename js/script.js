@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
         block.style.backgroundImage = `url(${blockImage})`;
         block.style.backgroundSize = "cover";
         block.style.backgroundRepeat = "round";
-      } 
+      }
 
       blockContainer.appendChild(block);
     });
@@ -140,22 +140,20 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Skapar drag funktionalitet för webbläsaren */
   const handleDragStart = (event) => {
     const blockContainer = event.target.closest(".block-container");
-    
+
     blockContainer.style.opacity = "0.01";
-  
+
     const blockId = blockContainer.dataset.id;
     const blockShape = blockContainer.dataset.shape;
-  
+
     const blockRect = blockContainer.getBoundingClientRect();
     const offsetX = Math.floor((event.clientX - blockRect.left) / blockSize);
     const offsetY = Math.floor((event.clientY - blockRect.top) / blockSize);
-  
+
     event.dataTransfer.setData("block-id", blockId);
     event.dataTransfer.setData("block-shape", blockShape);
     event.dataTransfer.setData("offset-x", offsetX);
     event.dataTransfer.setData("offset-y", offsetY);
-    
-    
   };
 
   const handleDragEnd = (event) => {
@@ -273,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
     blockContainer.style.top = `${blockRect.top}px`;
 
     blockContainer.style.position = "absolute";
-    blockContainer.style.zIndex = "1000";  
+    blockContainer.style.zIndex = "1000";
   };
 
   const handleTouchMove = (event) => {
@@ -380,7 +378,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (scoreSpan) {
           scoreSpan.innerText = score;
         } else if (progressBar) {
-          progressBar.style.width = `${Math.min((score / gameover) * 100, 100)}%`;
+          progressBar.style.width = `${Math.min(
+            (score / gameover) * 100,
+            100
+          )}%`;
         }
 
         for (let col = 0; col < gridSize; col++) {
@@ -389,14 +390,11 @@ document.addEventListener("DOMContentLoaded", function () {
           );
           slot.classList.add("slide-out-bck-center");
 
-          
-          slot.addEventListener('animationend', () => {
-
+          slot.addEventListener("animationend", () => {
             slot.className = "";
             slot.style.cssText = "";
             slot.classList.add("block-slot");
-          })
-       
+          });
         }
       }
     }
@@ -437,13 +435,12 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
             slot.classList.add("slide-out-bck-center");
-          
-            slot.addEventListener('animationend', () => {
 
-            slot.className = "";
-            slot.style.cssText = "";
-            slot.classList.add("block-slot");
-          })
+            slot.addEventListener("animationend", () => {
+              slot.className = "";
+              slot.style.cssText = "";
+              slot.classList.add("block-slot");
+            });
           }
         });
       }
@@ -484,8 +481,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const gameOverFunction = () => {
     if (gameMode === "points" && score >= gameover) {
-      blockPool.classList.add("block-pool-hidde");
       showModal();
+      
     } else if (gameMode === "moves") {
       gameover--;
 
@@ -503,16 +500,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-const showModal = () => {
-  const modal = document.getElementById("modal");
-  modal.classList.remove("hidden");
-};
+  const showModal = () => {
+    const modal = document.getElementById("modal");
+    modal.classList.remove("hidden");
+  };
 
-const closeButton = document.querySelector(".close-button");
-closeButton.addEventListener('click', () => {
-  location.reload();
-})
-
+  const closeButton = document.querySelector(".close-button");
+  closeButton.addEventListener("click", () => {
+    location.reload();
+  });
 
   createBlockPool();
   createGrid();
