@@ -503,18 +503,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // Function to show the modal
 const showModal = () => {
   const modal = document.getElementById("modal");
   modal.classList.remove("hidden");
 };
 
-// Function to hide the modal when the close button is clicked
+
 const closeModal = () => {
   location.reload();
 };
 
-// Event listener for the close button
 const closeButton = document.querySelector(".close-button");
 if (closeButton) {
   closeButton.addEventListener("click", closeModal);
