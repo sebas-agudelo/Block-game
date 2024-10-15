@@ -123,12 +123,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (blockImage) {
         block.style.backgroundImage = `url(${blockImage})`;
-        block.style.backgroundSize = "contain";
-        block.style.backgroundRepeat = "no-repeat";
-        console.log(`Setting background image for block: ${blockImage}`);
-      } else {
-        console.error(`Image not found for shape: ${shapeKey}`);
-      }
+        block.style.backgroundSize = "cover";
+        block.style.backgroundRepeat = "round";
+      } 
 
       blockContainer.appendChild(block);
     });
@@ -148,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const blockId = blockContainer.dataset.id;
     const blockShape = blockContainer.dataset.shape;
-    const blockColor = blockContainer.firstChild.classList[1];
+    // const blockColor = blockContainer.firstChild.classList[1];
 
     const blockRect = blockContainer.getBoundingClientRect();
     const offsetX = Math.floor((event.clientX - blockRect.left) / blockSize);
@@ -156,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     event.dataTransfer.setData("block-id", blockId);
     event.dataTransfer.setData("block-shape", blockShape);
-    event.dataTransfer.setData("block-color", blockColor);
+    // event.dataTransfer.setData("block-color", blockColor);
     event.dataTransfer.setData("offset-x", offsetX);
     event.dataTransfer.setData("offset-y", offsetY);
   };
@@ -245,8 +242,6 @@ document.addEventListener("DOMContentLoaded", function () {
           slot.style.backgroundImage = `url(${blockImage})`;
           slot.style.backgroundSize = "cover";
           slot.style.backgroundPosition = "center";
-        } else {
-          console.error(`Image not found for shape: ${shapeKey}`); // Log an error if the image URL is undefined
         }
       }
     });

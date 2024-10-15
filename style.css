@@ -81,8 +81,10 @@ body {
 
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
+  
   gap: 10px; 
   justify-items: center;
+ 
 }
 
 #block-pool .block-container {
@@ -94,10 +96,16 @@ body {
   max-width: 33px;
 
   height: 8.1vw;
-  max-height: 30px;
+  max-height: 33px;
 
   cursor: grab;
-  border-radius: 20%;
+  margin: 0 0 3px;
+}
+
+.block img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .block-container-placeholder {
