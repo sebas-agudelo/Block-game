@@ -7,7 +7,7 @@ const gameSelect = document.getElementById("game-select");
 
 const gridSize = 10;
 const blockSize = 33;
-let gameMode = "points";
+let gameMode = "moves";
 let score = 0;
 let gameover = 20;
 let moves = gameover;
@@ -482,7 +482,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const gameOverFunction = () => {
     if (gameMode === "points" && score >= gameover) {
       showModal();
-      
+
     } else if (gameMode === "moves") {
       gameover--;
 
