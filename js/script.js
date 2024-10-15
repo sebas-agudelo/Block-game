@@ -508,15 +508,11 @@ const showModal = () => {
   modal.classList.remove("hidden");
 };
 
-
-const closeModal = () => {
-  location.reload();
-};
-
 const closeButton = document.querySelector(".close-button");
-if (closeButton) {
-  closeButton.addEventListener("click", closeModal);
-}
+closeButton.addEventListener('click', () => {
+  location.reload();
+})
+
 
   createBlockPool();
   createGrid();
