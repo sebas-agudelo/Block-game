@@ -6,22 +6,22 @@ const movesWrapper = document.getElementById("moves");
 const gameSelect = document.getElementById("game-select");
 
 const gridSize = 10;
-const blockSize = 32;
+const blockSize = 33;
 let gameMode = "points";
 let score = 0;
 let gameover = 20;
 let moves = gameover;
 
 document.addEventListener("DOMContentLoaded", function () {
-  window.addEventListener("keydown", function (event) {
-    // Check for Ctrl + '+' or Ctrl + '-' or Ctrl + '='
-    if (
-      event.ctrlKey &&
-      (event.key === "+" || event.key === "-" || event.key === "=")
-    ) {
-      event.preventDefault();
-    }
-  });
+  // window.addEventListener("keydown", function (event) {
+  //   // Check for Ctrl + '+' or Ctrl + '-' or Ctrl + '='
+  //   if (
+  //     event.ctrlKey &&
+  //     (event.key === "+" || event.key === "-" || event.key === "=")
+  //   ) {
+  //     event.preventDefault();
+  //   }
+  // });
 
   const shapeImages = {
     Z: "images/Haribo-Rainbow.png",
@@ -289,6 +289,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const touch = event.touches[0];
     const gameRect = gameContainer.getBoundingClientRect();
+
 
     // Flytta blocket baserat på fingerposition
     activeBlock.style.left = `${touch.clientX - touchOffsetX}px`;
