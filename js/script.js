@@ -103,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const blockContainer = document.createElement("div");
     blockContainer.classList.add("block-container");
-    blockContainer.classList.add("scale-in-center");
     blockContainer.dataset.id = id;
     blockContainer.dataset.shape = shapeKey;
     blockContainer.draggable = true;
@@ -117,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     shape.forEach(([row, col]) => {
       const block = document.createElement("div");
-      block.classList.add("block");
+      block.classList.add("block", "flip-in-hor-bottom");
       block.style.gridRowStart = row + 1;
       block.style.gridColumnStart = col + 1;
 
@@ -141,21 +140,22 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Skapar drag funktionalitet för webbläsaren */
   const handleDragStart = (event) => {
     const blockContainer = event.target.closest(".block-container");
+    
     blockContainer.style.opacity = "0.01";
-
+  
     const blockId = blockContainer.dataset.id;
     const blockShape = blockContainer.dataset.shape;
-    // const blockColor = blockContainer.firstChild.classList[1];
-
+  
     const blockRect = blockContainer.getBoundingClientRect();
     const offsetX = Math.floor((event.clientX - blockRect.left) / blockSize);
     const offsetY = Math.floor((event.clientY - blockRect.top) / blockSize);
-
+  
     event.dataTransfer.setData("block-id", blockId);
     event.dataTransfer.setData("block-shape", blockShape);
-    // event.dataTransfer.setData("block-color", blockColor);
     event.dataTransfer.setData("offset-x", offsetX);
     event.dataTransfer.setData("offset-y", offsetY);
+    
+    
   };
 
   const handleDragEnd = (event) => {
@@ -220,9 +220,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const placeShape = (row, col, shape, shapeKey) => {
     const blockImage = shapeImages[shapeKey]; // Get the image for the current shape
-
-    // Debugging
-    console.log("Placing image for shape:", shapeKey, "with URL:", blockImage); // Debugging
 
     shape.forEach(([r, c]) => {
       const targetRow = row + r;
