@@ -13,15 +13,15 @@ let gameover = 20;
 let moves = gameover;
 
 document.addEventListener("DOMContentLoaded", function () {
-  // window.addEventListener("keydown", function (event) {
-  //   // Check for Ctrl + '+' or Ctrl + '-' or Ctrl + '='
-  //   if (
-  //     event.ctrlKey &&
-  //     (event.key === "+" || event.key === "-" || event.key === "=")
-  //   ) {
-  //     event.preventDefault();
-  //   }
-  // });
+  window.addEventListener("keydown", function (event) {
+    // Check for Ctrl + '+' or Ctrl + '-' or Ctrl + '='
+    if (
+      event.ctrlKey &&
+      (event.key === "+" || event.key === "-" || event.key === "=")
+    ) {
+      event.preventDefault();
+    }
+  });
 
   const shapeImages = {
     Z: "images/Haribo-Rainbow.png",
@@ -438,7 +438,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             slot.classList.add("slide-out-bck-center");
           
-          slot.addEventListener('animationend', () => {
+            slot.addEventListener('animationend', () => {
 
             slot.className = "";
             slot.style.cssText = "";
@@ -485,6 +485,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const gameOverFunction = () => {
     if (gameMode === "points" && score >= gameover) {
       blockPool.classList.add("block-pool-hidde");
+      showModal();
     } else if (gameMode === "moves") {
       gameover--;
 
@@ -497,9 +498,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (gameover <= 0) {
         blockPool.classList.add("block-pool-hidde");
+        showModal();
       }
     }
   };
+
+  // Function to show the modal
+const showModal = () => {
+  const modal = document.getElementById("modal");
+  modal.classList.remove("hidden");
+};
+
+// Function to hide the modal when the close button is clicked
+const closeModal = () => {
+  location.reload();
+};
+
+// Event listener for the close button
+const closeButton = document.querySelector(".close-button");
+if (closeButton) {
+  closeButton.addEventListener("click", closeModal);
+}
 
   createBlockPool();
   createGrid();
