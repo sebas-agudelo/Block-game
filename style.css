@@ -77,37 +77,27 @@ body {
 
 .wrapper #block-pool{
   width: 90vw;
-  /* height: 100px; */
   max-width: 315px;
 
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
   gap: 10px; 
-  justify-items: center;   
-  
+  justify-items: center;
 }
 
 #block-pool .block-container {
   display: grid;
-  gap: 2px;
-  /* border: 1px solid; */
-
 }
 
 .block-container .block {
-  width: 7.5vw;
+  width: 8.1vw;
   max-width: 33px;
-  /* min-width: 10px; */
 
-  height: 7.5vw;
-  max-height: 33px;
-  /* min-height: 10px; */
+  height: 8.1vw;
+  max-height: 30px;
+
   cursor: grab;
   border-radius: 20%;
-  margin: 0;
-  padding: 0; 
-  overflow: hidden;
-
 }
 
 .block-container-placeholder {

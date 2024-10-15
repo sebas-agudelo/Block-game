@@ -281,21 +281,18 @@ document.addEventListener("DOMContentLoaded", function () {
     blockContainer.style.top = `${blockRect.top}px`;
 
     blockContainer.style.position = "absolute";
-    blockContainer.style.zIndex = "1000";
+    blockContainer.style.zIndex = "1000";  
   };
 
   const handleTouchMove = (event) => {
-    if (!activeBlock) return; // Om inget block är valt, returnera.
+    if (!activeBlock) return;
 
     const touch = event.touches[0];
     const gameRect = gameContainer.getBoundingClientRect();
 
-
-    // Flytta blocket baserat på fingerposition
     activeBlock.style.left = `${touch.clientX - touchOffsetX}px`;
     activeBlock.style.top = `${touch.clientY - touchOffsetY}px`;
 
-    // Se till att blocket hålls inom spelområdet
     if (touch.clientX - touchOffsetX < gameRect.left) {
       activeBlock.style.left = `${gameRect.left}px`;
     }
@@ -328,7 +325,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (nearestSlot && nearestSlot.classList.contains("block-slot")) {
         const blockShapeKey = activeBlock.dataset.shape;
-        // const blockColor = activeBlock.firstChild.classList[1];
         const offsetX = Math.floor(touchOffsetX / blockSize);
         const offsetY = Math.floor(touchOffsetY / blockSize);
         const shape = shapes[blockShapeKey];
@@ -358,14 +354,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     }
-    // Remove placeholder
+
     const placeholder = document.querySelector(".block-container-placeholder");
     if (placeholder) {
       placeholder.remove();
     }
 
     if (activeBlock) {
-      // Reset block's position and z-index
       activeBlock.style.position = "static";
       activeBlock.style.zIndex = "1";
       activeBlock = null;
