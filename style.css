@@ -33,7 +33,7 @@ body {
   display: flex;
   justify-content: space-between;
   width: 90vw;
-  max-width: 315px;
+  max-width: 340px;
   margin: 20px 0;
   
 }
@@ -117,7 +117,7 @@ body {
 
   border-radius: 20px;
   width: 90vw;
-  max-width: 315px;
+  max-width: 340px;
   height: 25px;
   margin: 20px 0 0;
 }
@@ -139,12 +139,6 @@ body {
   width: 0%;
   transition: 1s ease 0.3s;
 }
-
-/* .block-pool-hidde{
-  visibility: hidden;
-  transition: .5s ease 1s;
-} */
-
 
 .flip-in-hor-bottom {
 	-webkit-animation: flip-in-hor-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
