@@ -12,6 +12,15 @@ let score = 0;
 let gameover = 20;
 let moves = gameover;
 
+
+if(scoreSpan){
+  scoreSpan.innerHTML = score;
+}
+
+if(movesWrapper){
+  movesWrapper.innerHTML = moves;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("keydown", function (event) {
     // Check for Ctrl + '+' or Ctrl + '-' or Ctrl + '='
@@ -24,8 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   const shapeImages = {
-    Z: "images/Haribo-Rainbow.png",
-    T: "images/Haribo-Nappar.png",
+    Z: "images/napp.png",
+    T: "images/cola-napp.png",
     O: "images/Haribo-Stjärn-Mix.png",
     U: "images/Haribo-Fruktilurer.png",
     L: "images/Haribo-Bönar.png",

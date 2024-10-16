@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -17,7 +18,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
+  justify-content: center;
   background: linear-gradient(180deg, #ffdde1, #f7b2b8, #b15c6d);
   margin: 0 auto;
 
@@ -34,12 +35,13 @@ body {
   justify-content: space-between;
   width: 90vw;
   max-width: 340px;
-  margin: 20px 0;
+
+  margin: 0 0 15px;
   
 }
 
 .scores-moves-wrapper #score,
-#lives {
+#moves {
   color: rgb(255, 255, 255);
  
 }
@@ -53,10 +55,9 @@ body {
   min-height: 100px;
 
   display: grid;
-  /* gap: 1px; */
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
-  margin: 0 0 90px;
+  margin: 0 0 50px;
   border: 5px solid orange;
   border-radius: 10px;
   background: transparent;
@@ -77,13 +78,15 @@ body {
 
 .wrapper #block-pool{
   width: 90vw;
-  max-width: 315px;
-
+  max-width: 340px;
+  min-height: 70px;
+  
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
   
   gap: 10px; 
   justify-items: center;
+  align-items: center;
 
  
 }
@@ -101,7 +104,8 @@ body {
   max-height: 33px;
 
   cursor: grab;
-  margin: 0 0 3px;
+  /* margin: 0 0 3px; */
+  border: 0.5px solid orange;
 }
 
 .block-container-placeholder {
@@ -119,7 +123,7 @@ body {
   width: 90vw;
   max-width: 340px;
   height: 25px;
-  margin: 20px 0 0;
+  margin: 0 0 15px;
 }
 
 .progress #progress-done{
