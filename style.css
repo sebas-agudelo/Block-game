@@ -34,7 +34,7 @@ body {
   display: flex;
   justify-content: space-between;
   width: 90vw;
-  max-width: 340px;
+  max-width: 300px;
 
   margin: 0 0 15px;
   
@@ -48,10 +48,10 @@ body {
 
 .wrapper #game-container {
   width: 90vw;
-  max-width: 340px;
+  max-width: 300px;
   min-width: 100px;
   height: 90vw;
-  max-height: 340px;
+  max-height: 300px;
   min-height: 100px;
 
   display: grid;
@@ -78,7 +78,7 @@ body {
 
 .wrapper #block-pool{
   width: 90vw;
-  max-width: 340px;
+  max-width: 300px;
   min-height: 70px;
   
   display: grid;
@@ -98,14 +98,15 @@ body {
 
 .block-container .block {
   width: 8.1vw;
-  max-width: 33px;
+  max-width: 29px;
 
   height: 8.1vw;
-  max-height: 33px;
+  max-height: 29px;
 
   cursor: grab;
   /* margin: 0 0 3px; */
   border: 0.5px solid orange;
+  border-radius: 5px;
 }
 
 .block-container-placeholder {
@@ -121,7 +122,7 @@ body {
 
   border-radius: 20px;
   width: 90vw;
-  max-width: 340px;
+  max-width: 300px;
   height: 25px;
   margin: 0 0 15px;
 }
@@ -244,7 +245,7 @@ body {
   padding: 20px;
   border-radius: 5px;
   width: 90vw;
-  max-width: 340px;
+  max-width: 300px;
 
   min-height: 170px;
 

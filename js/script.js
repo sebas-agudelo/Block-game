@@ -6,8 +6,8 @@ const movesWrapper = document.getElementById("moves");
 const gameSelect = document.getElementById("game-select");
 
 const gridSize = 10;
-const blockSize = 33;
-let gameMode = "moves";
+const blockSize = 29;
+let gameMode = "points";
 let score = 0;
 let gameover = 20;
 let moves = gameover;
