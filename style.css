@@ -22,8 +22,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, #ffdde1, #f7b2b8, #b15c6d);
+  background: linear-gradient(180deg, #ffc6cc, #f3a7ad, #b15c6d);
+
   margin: 0 auto;
+  border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
   /*Tar bort den inbbygda touch funktionen som kommer med i Safari och edge*/
   user-select: none; /* Standard property */ 
@@ -70,7 +73,7 @@ body {
   border: 5px solid #ffb7b7;
   border-radius: 10px;
   background: transparent;
-  /* box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px; */
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 
