@@ -9,12 +9,12 @@ body {
   font-family: "Nerko One", cursive;
   font-weight: 400;
   font-style: normal;
-  background: linear-gradient(180deg, #ff8a97, #ff6673, #b15c6d);
+  /* background: linear-gradient(180deg, #ff8a97, #ff6673, #b15c6d); */
 }
 
 .wrapper {
-
-  max-width: 400px;
+width: 100vw;
+  /* max-width: 400px; */
   height: 100dvh;
 
 
@@ -26,7 +26,7 @@ body {
 
   margin: 0 auto;
   border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
   /*Tar bort den inbbygda touch funktionen som kommer med i Safari och edge*/
   user-select: none; /* Standard property */ 
@@ -40,7 +40,7 @@ body {
   display: flex;
   justify-content: space-between;
   width: 90vw;
-  max-width: 300px;
+  max-width: 380px;
 
   margin: 0 0 15px;
   
@@ -60,10 +60,10 @@ body {
 
 .wrapper #game-container {
   width: 90vw;
-  max-width: 300px;
+  max-width: 380px;
   min-width: 100px;
   height: 90vw;
-  max-height: 300px;
+  max-height: 380px;
   min-height: 100px;
 
   display: grid;
@@ -94,7 +94,7 @@ body {
 
 .wrapper #block-pool{
   width: 90vw;
-  max-width: 300px;
+  max-width: 380px;
   min-height: 70px;
   
   display: grid;
@@ -114,10 +114,10 @@ body {
 
 .block-container .block {
   width: 8.1vw;
-  max-width: 29px;
+  max-width: 37px;
 
   height: 8.1vw;
-  max-height: 29px;
+  max-height: 37px;
 
   cursor: grab;
   margin: 0 0.5px 1px;
@@ -142,7 +142,7 @@ body {
 
   border-radius: 20px;
   width: 90vw;
-  max-width: 300px;
+  max-width: 380px;
   height: 18px;
   margin: 0 0 15px;
 }
@@ -266,7 +266,7 @@ body {
   padding: 20px;
   border-radius: 5px;
   width: 90vw;
-  max-width: 300px;
+  max-width: 380px;
 
   min-height: 170px;
 
