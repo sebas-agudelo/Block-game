@@ -14,8 +14,8 @@ body {
 
 .wrapper {
 
-  max-width: 325px;
-  height: 100vh;
+  max-width: 350px;
+  height: 100dvh;
 
 
   display: flex;
