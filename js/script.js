@@ -3,15 +3,22 @@ const progressBar = document.getElementById("progress-done");
 const blockPool = document.getElementById("block-pool");
 const scoreSpan = document.getElementById("score");
 const movesWrapper = document.getElementById("moves");
-const gameSelect = document.getElementById("game-select");
 
 const gridSize = 10;
 const blockSize = 29;
-let gameMode = "points";
+let gameMode = "moves";
 let score = 0;
 let gameover = 20;
 let moves = gameover;
 
+if(gameMode === 'moves' && progressBar){
+  progressBar.style.width = `${Math.max((gameover / moves) * 100, 0)}%`;
+
+} else if(gameMode === 'points' && progressBar){
+  progressBar.style.width = `${Math.min((score / gameover) * 100, 100)}%`;
+  movesWrapper.style.display = 'none';
+ 
+}
 
 if(scoreSpan){
   scoreSpan.innerHTML = score;
@@ -35,10 +42,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const shapeImages = {
     Z: "images/napp.png",
     T: "images/cola-napp.png",
-    O: "images/Haribo-Stjärn-Mix.png",
+    O: "images/bubbel-nappar.png",
     U: "images/Haribo-Fruktilurer.png",
-    L: "images/Haribo-Bönar.png",
-    I: "images/Haribo-Stardust.png",
+    L: "images/Haribo-stor.png",
+    I: "images/lokrits-nappar.png",
     M: "images/haribo-Psiche.png",
     N: "images/Haribo-Nappar-Lakrits.png",
   };
@@ -125,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     shape.forEach(([row, col]) => {
       const block = document.createElement("div");
-      block.classList.add("block", "flip-in-hor-bottom");
+      block.classList.add("block", "tilt-in-fwd-tr");
       block.style.gridRowStart = row + 1;
       block.style.gridColumnStart = col + 1;
 
@@ -473,6 +480,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (gameMode === "points") {
       score = Math.min(score, gameover);
 
+
       if (scoreSpan) {
         scoreSpan.innerHTML = score;
       }
@@ -493,6 +501,7 @@ document.addEventListener("DOMContentLoaded", function () {
       showModal();
 
     } else if (gameMode === "moves") {
+
       gameover--;
 
       if (movesWrapper) {
@@ -503,7 +512,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (gameover <= 0) {
-        blockPool.classList.add("block-pool-hidde");
         showModal();
       }
     }
