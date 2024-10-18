@@ -5,7 +5,7 @@ const scoreSpan = document.getElementById("score");
 const movesWrapper = document.getElementById("moves");
 
 const gridSize = 10;
-const blockSize = 36.5;
+const blockSize = 37;
 let gameMode = "moves";
 let score = 0;
 let gameover = 20;
