@@ -14,7 +14,6 @@ body {
 
 .wrapper {
 width: 100vw;
-  /* max-width: 400px; */
   height: 100dvh;
 
 
@@ -95,7 +94,8 @@ width: 100vw;
 .wrapper #block-pool{
   width: 90vw;
   max-width: 380px;
-  min-height: 70px;
+  min-width: 70px;
+  min-height: 72px;
   
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
@@ -113,10 +113,10 @@ width: 100vw;
 }
 
 .block-container .block {
-  width: 8.1vw;
+  width: 8vw;
   max-width: 37px;
 
-  height: 8.1vw;
+  height: 8vw;
   max-height: 37px;
 
   cursor: grab;
@@ -133,7 +133,7 @@ width: 100vw;
   width: 84px;
   max-width: 84px;
   height: 100%; 
-  /* opacity: 0;  */
+  
 }
 
 
