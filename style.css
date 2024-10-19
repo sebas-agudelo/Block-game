@@ -39,7 +39,7 @@ width: 100vw;
   display: flex;
   justify-content: space-between;
   width: 90vw;
-  max-width: 380px;
+  max-width: 340px;
 
   margin: 0 0 15px;
   
@@ -59,10 +59,10 @@ width: 100vw;
 
 .wrapper #game-container {
   width: 90vw;
-  max-width: 380px;
+  max-width: 340px;
   min-width: 100px;
   height: 90vw;
-  max-height: 380px;
+  max-height: 340px;
   min-height: 100px;
 
   display: grid;
@@ -93,14 +93,14 @@ width: 100vw;
 
 .wrapper #block-pool{
   width: 90vw;
-  max-width: 380px;
+  max-width: 340px;
   min-width: 70px;
   min-height: 72px;
   
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
   
-  gap: 10px; 
+  /* gap: 10px;  */
   justify-items: center;
   align-items: center;
 
@@ -113,14 +113,14 @@ width: 100vw;
 }
 
 .block-container .block {
-  width: 8vw;
-  max-width: 37px;
+  width: 8.4vw;
+  max-width: 33px;
 
-  height: 8vw;
-  max-height: 37px;
+  height: 8.4vw;
+  max-height: 33px;
 
   cursor: grab;
-  margin: 0 0.5px 1px;
+  /* margin: 0 0.5px 1px; */
   /* border: 0.5px solid rgb(94, 0, 0); */
   border-radius: 3px;
   -webkit-box-shadow: 1px -1px 2px 0px rgb(90, 0, 0);
@@ -130,7 +130,7 @@ width: 100vw;
 }
 
 .block-container-placeholder {
-  width: 84px;
+
   max-width: 84px;
   height: 100%; 
   
@@ -142,7 +142,7 @@ width: 100vw;
 
   border-radius: 20px;
   width: 90vw;
-  max-width: 380px;
+  max-width: 340px;
   height: 18px;
   margin: 0 0 15px;
 }
@@ -266,7 +266,7 @@ width: 100vw;
   padding: 20px;
   border-radius: 5px;
   width: 90vw;
-  max-width: 380px;
+  max-width: 340px;
 
   min-height: 170px;
 
